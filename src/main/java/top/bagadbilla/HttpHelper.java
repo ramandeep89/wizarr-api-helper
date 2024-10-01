@@ -29,9 +29,7 @@ public class HttpHelper<T> {
                     HttpRequest.newBuilder()
                             .uri(URI.create(url))
                             .GET();
-            for (Map.Entry<String, String> header : headers.entrySet()) {
-                builder.header(header.getKey(), header.getValue());
-            }
+            headers.forEach(builder::header);
             HttpRequest request = builder.build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             return new Gson().fromJson(response.body(), type);
